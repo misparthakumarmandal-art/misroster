@@ -1,29 +1,219 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shift Roster</title><style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7f8}.hidden{display:none!important}.login{min-height:100vh;display:flex;align-items:center;justify-content:center}.box{width:360px;background:white;padding:28px;border:1px solid #aaa;border-radius:10px;box-shadow:0 8px 25px #0002}.box h2{text-align:center}.box label{display:block;font-weight:bold;font-size:13px;margin:12px 0 5px}.box input{width:100%;padding:10px;border:1px solid #aaa;border-radius:5px}.box button{width:100%;margin-top:16px;padding:10px;background:#08dede;border:1px solid #078f8f;border-radius:5px;font-weight:bold}.err{color:#d00;text-align:center;font-size:12px;min-height:18px}.app{padding:10px}.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}.top h1{font-size:22px;margin:0}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button,.actions input{padding:8px;border:1px solid #999;border-radius:5px}.actions button{background:#08dede;font-weight:bold;cursor:pointer}.actions .logout{background:white;color:red;border-color:red}.table-wrap{overflow:auto;background:white;border:1px solid #777}table{width:100%;min-width:950px;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #888;height:31px;text-align:center;padding:2px}th{font-size:12px}.name,th.name{width:125px;background:#08dede;text-align:left;padding-left:5px}.employee{background:#08dede;text-align:left;padding-left:5px;font-size:14px;font-weight:bold}.fri,.sat{color:red}.manage{width:70px}.sel{width:100%;height:23px;border:0;border-radius:12px;font-size:11px;padding:0 5px}.Morning{background:#e8ebed}.Evening{background:#ffd0b1}.Night{background:#ffcaca}.OFF{background:#f10d17}.del{padding:4px 7px!important;background:white!important;color:red;border:1px solid red!important;font-size:10px}.modal{position:fixed;inset:0;background:#0007;display:flex;align-items:center;justify-content:center;padding:20px}.modalbox{width:430px;max-width:100%;background:white;padding:20px;border-radius:8px}.modalbox input{width:100%;padding:9px;margin:4px 0 10px;border:1px solid #aaa;border-radius:5px}.userrow{display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #ddd;font-size:13px}.userlist{border:1px solid #ddd;max-height:220px;overflow:auto;margin-bottom:12px}.userrow button{color:red;background:white;border:1px solid red;border-radius:4px}.modal-actions{display:flex;gap:6px}.modal-actions button{padding:8px 12px}.status{font-size:12px;color:#555;margin:4px 0 8px}@media print{.top,.status,.manage{display:none!important}.table-wrap{border:0}}
-</style></head><body>
-<div id="login" class="login"><div class="box"><h2>Shift Roster Login</h2><form onsubmit="login(event)"><label>Username</label><input id="u" required><label>Password</label><input id="p" type="password" required><button>Login</button><div id="err" class="err"></div></form><small>Admin can edit and create Viewer accounts. Viewer can only view.</small></div></div>
-<div id="app" class="app hidden"><div class="top"><div><h1>Shift Roster</h1><div>Logged in: <b id="who"></b> (<span id="role"></span>)</div></div><div class="actions"><input id="search" placeholder="Search employee..." oninput="render()"><button id="add" onclick="addEmployee()">+ Employee</button><button id="users" onclick="openUsers()">Manage Users</button><button onclick="print()">Print</button><button id="reset" onclick="resetRoster()">Reset</button><button class="logout" onclick="logout()">Logout</button></div></div><div id="status" class="status">Saved locally</div><div class="table-wrap"><table><thead><tr><th class="name">Day</th><th>Sunday</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th class="fri">Friday</th><th class="sat">Saturday</th><th class="manage">Manage</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
-<div id="modal" class="modal hidden"><div class="modalbox"><h3>Manage Users</h3><div id="userlist" class="userlist"></div><label>New username</label><input id="nu" autocomplete="off"><label>New password</label><input id="np" type="password" autocomplete="new-password"><label>Access type</label><select id="newRole" style="width:100%;padding:9px;margin:4px 0 10px;border:1px solid #aaa;border-radius:5px"><option value="viewer">Viewer - View only</option><option value="admin">Administrator - Full access</option></select><div id="uerr" class="err"></div><div class="modal-actions"><button onclick="createUser()">Create User</button><button onclick="closeUsers()">Close</button></div><hr style="border:0;border-top:1px solid #ddd;margin:18px 0"><h3 style="font-size:17px">Change My Password</h3><label>Current password</label><input id="cp" type="password" autocomplete="current-password"><label>New password</label><input id="ap" type="password" autocomplete="new-password"><label>Confirm new password</label><input id="ap2" type="password" autocomplete="new-password"><div id="perr" class="err"></div><div class="modal-actions"><button onclick="changeMyPassword()">Change Password</button></div></div></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shift Roster</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7f8}.hidden{display:none!important}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center}.box{width:360px;background:white;padding:28px;border:1px solid #aaa;border-radius:10px;box-shadow:0 8px 25px #0002}.box h2{text-align:center}.box label{display:block;font-weight:bold;font-size:13px;margin:12px 0 5px}.box input{width:100%;padding:10px;border:1px solid #aaa;border-radius:5px}.box button{width:100%;margin-top:16px;padding:10px;background:#08dede;border:1px solid #078f8f;border-radius:5px;font-weight:bold}.err{color:#d00;text-align:center;font-size:12px;min-height:18px}.app{padding:10px}.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}.top h1{font-size:22px;margin:0}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button,.actions input{padding:8px;border:1px solid #999;border-radius:5px}.actions button{background:#08dede;font-weight:bold;cursor:pointer}.actions .logout{background:white;color:red;border-color:red}.table-wrap{overflow:auto;background:white;border:1px solid #777}table{width:100%;min-width:950px;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #888;height:31px;text-align:center;padding:2px}th{font-size:12px}.name,th.name{width:125px;background:#08dede;text-align:left;padding-left:5px}.employee{background:#08dede;text-align:left;padding-left:5px;font-size:14px;font-weight:bold}.fri,.sat{color:red}.manage{width:70px}.sel{width:100%;height:23px;border:0;border-radius:12px;font-size:11px;padding:0 5px}.Morning{background:#e8ebed}.Evening{background:#ffd0b1}.Night{background:#ffcaca}.OFF{background:#f10d17;color:white}.del{padding:4px 7px!important;background:white!important;color:red;border:1px solid red!important;font-size:10px}.modal{position:fixed;inset:0;background:#0007;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}.modalbox{width:430px;max-width:100%;background:white;padding:20px;border-radius:8px}.modalbox input{width:100%;padding:9px;margin:4px 0 10px;border:1px solid #aaa;border-radius:5px}.userrow{display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #ddd;font-size:13px}.userlist{border:1px solid #ddd;max-height:220px;overflow:auto;margin-bottom:12px}.userrow button{color:red;background:white;border:1px solid red;border-radius:4px}.modal-actions{display:flex;gap:6px}.modal-actions button{padding:8px 12px}.status{font-size:12px;color:#555;margin:4px 0 8px}@media print{.top,.status,.manage{display:none!important}.table-wrap{border:0}}
+</style>
+</head>
+<body>
+<div id="login" class="login"><div class="box">
+<h2>Shift Roster Login</h2>
+<form onsubmit="login(event)">
+<label>Username</label><input id="u" autocomplete="username" required>
+<label>Password</label><input id="p" type="password" autocomplete="current-password" required>
+<button>Login</button><div id="err" class="err"></div>
+</form>
+<small>Admin can edit and create Viewer accounts. Viewer can only view.</small>
+</div></div>
+
+<div id="app" class="app hidden">
+<div class="top">
+<div><h1>Shift Roster</h1><div>Logged in: <b id="who"></b> (<span id="role"></span>)</div></div>
+<div class="actions">
+<input id="search" placeholder="Search employee..." oninput="render()">
+<button id="add" onclick="addEmployee()">+ Employee</button>
+<button id="users" onclick="openUsers()">Manage Users</button>
+<button onclick="window.print()">Print</button>
+<button id="reset" onclick="resetRoster()">Reset</button>
+<button class="logout" onclick="logout()">Logout</button>
+</div>
+</div>
+<div id="status" class="status">Connecting...</div>
+<div class="table-wrap"><table><thead><tr>
+<th class="name">Day</th><th>Sunday</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th class="fri">Friday</th><th class="sat">Saturday</th><th class="manage">Manage</th>
+</tr></thead><tbody id="tbody"></tbody></table></div>
+</div>
+
+<div id="modal" class="modal hidden"><div class="modalbox">
+<h3>Manage Users</h3><div id="userlist" class="userlist"></div>
+<label>New username</label><input id="nu" autocomplete="off">
+<label>New password</label><input id="np" type="password" autocomplete="new-password">
+<label>Access type</label>
+<select id="newRole" style="width:100%;padding:9px;margin:4px 0 10px;border:1px solid #aaa;border-radius:5px">
+<option value="viewer">Viewer - View only</option><option value="admin">Administrator - Full access</option>
+</select>
+<div id="uerr" class="err"></div>
+<div class="modal-actions"><button onclick="createUser()">Create User</button><button onclick="closeUsers()">Close</button></div>
+<hr style="border:0;border-top:1px solid #ddd;margin:18px 0">
+<h3 style="font-size:17px">Change My Password</h3>
+<label>Current password</label><input id="cp" type="password" autocomplete="current-password">
+<label>New password</label><input id="ap" type="password" autocomplete="new-password">
+<label>Confirm new password</label><input id="ap2" type="password" autocomplete="new-password">
+<div id="perr" class="err"></div><div class="modal-actions"><button onclick="changeMyPassword()">Change Password</button></div>
+</div></div>
+
 <script>
+const CONFIG = {
+  SUPABASE_URL: 'https://yzmxsulamzoxxfzzztgt.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_uwrr5J2EdLC6i8GYIQqLww_NN5kaTSg'
+};
 const SH=['Morning','Evening','Night','OFF'];
 const D=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const DEFAULT=[['Regyan',['Morning','Morning','Morning','Morning','Morning','Morning','Morning']],['Tapas',['OFF','Morning','Morning','Morning','Morning','Morning','OFF']],['Nitu',['OFF','Evening','Evening','Evening','Evening','Morning','OFF']],['Ashraful',['Morning','Morning','Evening','Morning','OFF','OFF','Evening']],['Mazharul',['Morning','Morning','Morning','Morning','Morning','OFF','OFF']],['Rabby',['Evening','Evening','Evening','Evening','Evening','OFF','OFF']],['Shohidul',['OFF','Evening','Morning','Evening','Morning','Evening','OFF']],['Ayan',['Morning','Evening','Evening','Evening','OFF','OFF','Evening']],['Arman',['Evening','Evening','Evening','Evening','OFF','OFF','Morning']],['Jaber',['Evening','Evening','Evening','Evening','Morning','Morning','OFF']],['Joynto',['Night','OFF','Morning','Morning','Evening','Morning','OFF']],['Joy',['Evening','Morning','Morning','Night','OFF','Evening','Morning']],['Rakib',['Morning','Morning','Morning','Night','Night','OFF','Morning']],['Partho',['Morning','Morning','Night','OFF','Evening','Evening','Evening']],['Nur',['Evening','Morning','Evening','Morning','Evening','Night','OFF']],['Shaown',['Morning','Night','OFF','Morning','Morning','Evening','Morning']],['Primon',['OFF','Evening','Evening','Evening','Morning','Morning','Night']]];
-let employees=JSON.parse(localStorage.getItem('roster')||'null')||DEFAULT.map(x=>({name:x[0],shifts:x[1]}));
-function save(){localStorage.setItem('roster',JSON.stringify(employees))}
-function users(){let x=JSON.parse(localStorage.getItem('users')||'null');if(!x){x=[{username:'admin',password:'admin123',role:'admin'}];localStorage.setItem('users',JSON.stringify(x))}return x}
-let session=JSON.parse(sessionStorage.getItem('session')||'null');
-function login(e){e.preventDefault();let u=document.getElementById('u').value.trim(),p=document.getElementById('p').value,x=users().find(a=>a.username===u&&a.password===p);if(!x){err.textContent='Invalid username or password';return}session={username:x.username,role:x.role};sessionStorage.setItem('session',JSON.stringify(session));show()}
-function show(){if(!session)return;loginDiv.classList.add('hidden');app.classList.remove('hidden');who.textContent=session.username;role.textContent=session.role==='admin'?'Admin':'Viewer';let a=session.role==='admin';add.classList.toggle('hidden',!a);usersBtn.classList.toggle('hidden',!a);reset.classList.toggle('hidden',!a);render()}
-function logout(){sessionStorage.removeItem('session');session=null;app.classList.add('hidden');loginDiv.classList.remove('hidden');u.value='';p.value=''}
-function cls(s){return s}
-function render(){tbody.innerHTML='';let q=search.value.toLowerCase().trim();employees.forEach((e,i)=>{if(q&&!e.name.toLowerCase().includes(q))return;let tr=document.createElement('tr'),n=document.createElement('td');n.className='employee';n.textContent=e.name;tr.appendChild(n);e.shifts.forEach((s,d)=>{let td=document.createElement('td'),sel=document.createElement('select');sel.className='sel '+cls(s);SH.forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v;o.selected=v===s;sel.appendChild(o)});if(session.role==='admin')sel.onchange=()=>{e.shifts[d]=sel.value;sel.className='sel '+sel.value;save();status.textContent='Saved: '+e.name+' / '+D[d]+' / '+sel.value};else sel.disabled=true;td.appendChild(sel);tr.appendChild(td)});let m=document.createElement('td');m.className='manage';if(session.role==='admin'){let b=document.createElement('button');b.className='del';b.textContent='Delete';b.onclick=()=>{if(confirm('Delete '+e.name+'?')){employees.splice(i,1);save();render()}};m.appendChild(b)}tr.appendChild(m);tbody.appendChild(tr)})}
-function addEmployee(){let n=prompt('Employee name:');if(!n||!n.trim())return;n=n.trim();if(employees.some(e=>e.name.toLowerCase()===n.toLowerCase()))return alert('Employee already exists.');employees.push({name:n,shifts:['OFF','OFF','OFF','OFF','OFF','OFF','OFF']});save();render()}
-function resetRoster(){if(confirm('Reset to the original sample data?')){employees=DEFAULT.map(x=>({name:x[0],shifts:[...x[1]]}));save();render()}}
-function openUsers(){renderUsers();modal.classList.remove('hidden')}
+const DEFAULT=[
+['Regyan',['Morning','Morning','Morning','Morning','Morning','Morning','Morning']],
+['Tapas',['OFF','Morning','Morning','Morning','Morning','Morning','OFF']],
+['Nitu',['OFF','Evening','Evening','Evening','Evening','Morning','OFF']],
+['Ashraful',['Morning','Morning','Evening','Morning','OFF','OFF','Evening']],
+['Mazharul',['Morning','Morning','Morning','Morning','Morning','OFF','OFF']],
+['Rabby',['Evening','Evening','Evening','Evening','Evening','OFF','OFF']],
+['Shohidul',['OFF','Evening','Morning','Evening','Morning','Evening','OFF']],
+['Ayan',['Morning','Evening','Evening','Evening','OFF','OFF','Evening']],
+['Arman',['Evening','Evening','Evening','Evening','OFF','OFF','Morning']],
+['Jaber',['Evening','Evening','Evening','Evening','Morning','Morning','OFF']],
+['Joynto',['Night','OFF','Morning','Morning','Evening','Morning','OFF']],
+['Joy',['Evening','Morning','Morning','Night','OFF','Evening','Morning']],
+['Rakib',['Morning','Morning','Morning','Night','Night','OFF','Morning']],
+['Partho',['Morning','Morning','Night','OFF','Evening','Evening','Evening']],
+['Nur',['Evening','Morning','Evening','Morning','Evening','Night','OFF']],
+['Shaown',['Morning','Night','OFF','Morning','Morning','Evening','Morning']],
+['Primon',['OFF','Evening','Evening','Evening','Morning','Morning','Night']]
+];
+
+let employees=[];
+let session=JSON.parse(localStorage.getItem('sr_session')||'null');
+let pollTimer=null;
+
+const loginDiv=document.getElementById('login'),app=document.getElementById('app'),u=document.getElementById('u'),p=document.getElementById('p'),
+err=document.getElementById('err'),who=document.getElementById('who'),role=document.getElementById('role'),add=document.getElementById('add'),
+usersBtn=document.getElementById('users'),reset=document.getElementById('reset'),tbody=document.getElementById('tbody'),search=document.getElementById('search'),
+status=document.getElementById('status'),modal=document.getElementById('modal'),userlist=document.getElementById('userlist'),nu=document.getElementById('nu'),
+np=document.getElementById('np'),newRole=document.getElementById('newRole'),uerr=document.getElementById('uerr'),cp=document.getElementById('cp'),
+ap=document.getElementById('ap'),ap2=document.getElementById('ap2');
+
+function readyConfig(){
+  return CONFIG.SUPABASE_URL.startsWith('https://') &&
+         !CONFIG.SUPABASE_URL.includes('PASTE_YOUR') &&
+         !CONFIG.SUPABASE_ANON_KEY.includes('PASTE_YOUR');
+}
+function headers(){return {'apikey':CONFIG.SUPABASE_ANON_KEY,'Authorization':'Bearer '+CONFIG.SUPABASE_ANON_KEY,'Content-Type':'application/json'};}
+async function rpc(name, body={}){
+  if(!readyConfig()) throw new Error('Please put your Supabase URL and anon key in index.html first.');
+  const r=await fetch(CONFIG.SUPABASE_URL+'/rest/v1/rpc/'+name,{method:'POST',headers:headers(),body:JSON.stringify(body)});
+  const text=await r.text();
+  if(!r.ok) throw new Error(text||('HTTP '+r.status));
+  try{return JSON.parse(text)}catch{return text}
+}
+async function table(path, query=''){
+  const r=await fetch(CONFIG.SUPABASE_URL+'/rest/v1/'+path+query,{headers:headers()});
+  const text=await r.text();
+  if(!r.ok) throw new Error(text||('HTTP '+r.status));
+  return JSON.parse(text);
+}
+
+async function login(e){
+  e.preventDefault(); err.textContent='';
+  try{
+    const rows=await rpc('login_user',{p_username:u.value.trim(),p_password:p.value});
+    if(!rows || !rows.length) throw new Error('Invalid username or password');
+    session=rows[0]; localStorage.setItem('sr_session',JSON.stringify(session)); show();
+  }catch(ex){err.textContent=niceError(ex);}
+}
+function niceError(ex){
+  try{let x=JSON.parse(ex.message); return x.message||x.error||ex.message}catch{return ex.message||'Request failed'}
+}
+async function show(){
+  if(!session) return;
+  loginDiv.classList.add('hidden'); app.classList.remove('hidden');
+  who.textContent=session.username; role.textContent=session.role==='admin'?'Admin':'Viewer';
+  const a=session.role==='admin'; add.classList.toggle('hidden',!a); usersBtn.classList.toggle('hidden',!a); reset.classList.toggle('hidden',!a);
+  await loadRoster();
+  clearInterval(pollTimer); pollTimer=setInterval(loadRoster,3000);
+}
+async function logout(){
+  try{if(session?.token) await rpc('logout_user',{p_token:session.token});}catch(e){}
+  clearInterval(pollTimer); localStorage.removeItem('sr_session'); session=null;
+  app.classList.add('hidden'); loginDiv.classList.remove('hidden'); u.value=''; p.value='';
+}
+async function loadRoster(){
+  try{
+    const emps=await table('employees','?select=id,name&order=id.asc');
+    const sh=await table('shifts','?select=employee_id,day_of_week,shift_name&order=employee_id.asc,day_of_week.asc');
+    const map={}; sh.forEach(x=>{(map[x.employee_id]??={})[x.day_of_week]=x.shift_name});
+    employees=emps.map(e=>({id:e.id,name:e.name,shifts:D.map((_,i)=>map[e.id]?.[i]||'OFF')}));
+    render(); status.textContent='Live • Updated '+new Date().toLocaleTimeString();
+  }catch(ex){status.textContent='Connection error: '+niceError(ex);}
+}
+function render(){
+  tbody.innerHTML=''; let q=search.value.toLowerCase().trim();
+  employees.forEach(e=>{
+    if(q&&!e.name.toLowerCase().includes(q))return;
+    const tr=document.createElement('tr'), n=document.createElement('td'); n.className='employee'; n.textContent=e.name; tr.appendChild(n);
+    e.shifts.forEach((s,d)=>{
+      const td=document.createElement('td'), sel=document.createElement('select'); sel.className='sel '+s;
+      SH.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;o.selected=v===s;sel.appendChild(o)});
+      if(session.role==='admin') sel.onchange=async()=>{try{
+        await rpc('set_shift',{p_token:session.token,p_employee_id:e.id,p_day_of_week:d,p_shift_name:sel.value});
+        status.textContent='Saved: '+e.name+' / '+D[d]+' / '+sel.value;
+      }catch(ex){alert(niceError(ex));await loadRoster();}};
+      else sel.disabled=true;
+      td.appendChild(sel);tr.appendChild(td);
+    });
+    const m=document.createElement('td');m.className='manage';
+    if(session.role==='admin'){const b=document.createElement('button');b.className='del';b.textContent='Delete';b.onclick=()=>deleteEmployee(e);m.appendChild(b)}
+    tr.appendChild(m);tbody.appendChild(tr);
+  });
+}
+async function addEmployee(){
+  const n=prompt('Employee name:'); if(!n||!n.trim())return;
+  try{await rpc('add_employee',{p_token:session.token,p_name:n.trim()});await loadRoster();}
+  catch(ex){alert(niceError(ex))}
+}
+async function deleteEmployee(e){
+  if(!confirm('Delete '+e.name+'?'))return;
+  try{await rpc('delete_employee',{p_token:session.token,p_employee_id:e.id});await loadRoster();}
+  catch(ex){alert(niceError(ex))}
+}
+async function resetRoster(){
+  if(!confirm('Reset to the original sample data?'))return;
+  try{await rpc('reset_roster',{p_token:session.token});await loadRoster();}
+  catch(ex){alert(niceError(ex))}
+}
+async function openUsers(){
+  try{await renderUsers();modal.classList.remove('hidden')}catch(ex){alert(niceError(ex))}
+}
 function closeUsers(){modal.classList.add('hidden')}
-function renderUsers(){userlist.innerHTML='';users().forEach(x=>{let r=document.createElement('div');r.className='userrow';r.innerHTML='<span>'+x.username+' ('+(x.role==='admin'?'Administrator':'Viewer')+')</span>';if(x.username!=='admin' || x.username!==session.username){let b=document.createElement('button');b.textContent='Delete';b.onclick=()=>{if(x.username===session.username){alert('You cannot delete the account currently logged in.');return}if(confirm('Delete '+x.username+'?')){saveUsers(users().filter(y=>y.username!==x.username));renderUsers()}};r.appendChild(b)}userlist.appendChild(r)})}
-function saveUsers(x){localStorage.setItem('users',JSON.stringify(x))}
-function createUser(){let n=nu.value.trim(),pw=np.value,r=newRole.value;if(!n||!pw){uerr.textContent='Username and password are required';return}if(pw.length<4){uerr.textContent='Password must be at least 4 characters';return}let x=users();if(x.some(a=>a.username.toLowerCase()===n.toLowerCase())){uerr.textContent='Username already exists';return}x.push({username:n,password:pw,role:r});saveUsers(x);nu.value='';np.value='';newRole.value='viewer';uerr.textContent='';renderUsers();alert(r==='admin'?'Administrator account created':'Viewer account created')}
-function changeMyPassword(){let current=cp.value,newp=ap.value,confirmP=ap2.value;if(!current||!newp||!confirmP){perr.textContent='Please fill all password fields';return}if(newp.length<4){perr.textContent='New password must be at least 4 characters';return}if(newp!==confirmP){perr.textContent='New passwords do not match';return}let x=users(),me=x.find(a=>a.username===session.username);if(!me||me.password!==current){perr.textContent='Current password is incorrect';return}me.password=newp;saveUsers(x);cp.value='';ap.value='';ap2.value='';perr.textContent='';alert('Password changed successfully')}
-const loginDiv=document.getElementById('login'),app=document.getElementById('app'),u=document.getElementById('u'),p=document.getElementById('p'),err=document.getElementById('err'),who=document.getElementById('who'),role=document.getElementById('role'),add=document.getElementById('add'),usersBtn=document.getElementById('users'),reset=document.getElementById('reset'),tbody=document.getElementById('tbody'),search=document.getElementById('search'),status=document.getElementById('status'),modal=document.getElementById('modal'),userlist=document.getElementById('userlist'),nu=document.getElementById('nu'),np=document.getElementById('np'),newRole=document.getElementById('newRole'),uerr=document.getElementById('uerr'),cp=document.getElementById('cp'),ap=document.getElementById('ap'),ap2=document.getElementById('ap2'),perr=document.getElementById('perr');users();if(session)show();
-</script></body></html>
+async function renderUsers(){
+  const rows=await rpc('list_users',{p_token:session.token}); userlist.innerHTML='';
+  rows.forEach(x=>{
+    const r=document.createElement('div');r.className='userrow';
+    const span=document.createElement('span');span.textContent=x.username+' ('+(x.role==='admin'?'Administrator':'Viewer')+')';r.appendChild(span);
+    if(x.username!==session.username){
+      const b=document.createElement('button');b.textContent='Delete';b.onclick=async()=>{if(confirm('Delete '+x.username+'?')){try{await rpc('delete_user',{p_token:session.token,p_username:x.username});await renderUsers()}catch(ex){alert(niceError(ex))}}};r.appendChild(b);
+    }
+    userlist.appendChild(r);
+  });
+}
+async function createUser(){
+  const n=nu.value.trim(),pw=np.value,r=newRole.value;
+  uerr.textContent='';
+  if(!n||!pw){uerr.textContent='Username and password are required';return}
+  if(pw.length<4){uerr.textContent='Password must be at least 4 characters';return}
+  try{await rpc('create_user',{p_token:session.token,p_username:n,p_password:pw,p_role:r});nu.value='';np.value='';newRole.value='viewer';await renderUsers();alert('User created successfully');}
+  catch(ex){uerr.textContent=niceError(ex)}
+}
+async function changeMyPassword(){
+  const current=cp.value,newp=ap.value,confirmP=ap2.value;perr.textContent='';
+  if(!current||!newp||!confirmP){perr.textContent='Please fill all password fields';return}
+  if(newp.length<4){perr.textContent='New password must be at least 4 characters';return}
+  if(newp!==confirmP){perr.textContent='New passwords do not match';return}
+  try{await rpc('change_my_password',{p_token:session.token,p_current_password:current,p_new_password:newp});
+    cp.value='';ap.value='';ap2.value='';alert('Password changed successfully');
+  }catch(ex){perr.textContent=niceError(ex)}
+}
+if(session) show();
+</script>
+</body></html>
