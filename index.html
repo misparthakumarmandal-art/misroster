@@ -1,219 +1,2263 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Shift Roster</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7f8}.hidden{display:none!important}
-.login{min-height:100vh;display:flex;align-items:center;justify-content:center}.box{width:360px;background:white;padding:28px;border:1px solid #aaa;border-radius:10px;box-shadow:0 8px 25px #0002}.box h2{text-align:center}.box label{display:block;font-weight:bold;font-size:13px;margin:12px 0 5px}.box input{width:100%;padding:10px;border:1px solid #aaa;border-radius:5px}.box button{width:100%;margin-top:16px;padding:10px;background:#08dede;border:1px solid #078f8f;border-radius:5px;font-weight:bold}.err{color:#d00;text-align:center;font-size:12px;min-height:18px}.app{padding:10px}.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}.top h1{font-size:22px;margin:0}.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button,.actions input{padding:8px;border:1px solid #999;border-radius:5px}.actions button{background:#08dede;font-weight:bold;cursor:pointer}.actions .logout{background:white;color:red;border-color:red}.table-wrap{overflow:auto;background:white;border:1px solid #777}table{width:100%;min-width:950px;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #888;height:31px;text-align:center;padding:2px}th{font-size:12px}.name,th.name{width:125px;background:#08dede;text-align:left;padding-left:5px}.employee{background:#08dede;text-align:left;padding-left:5px;font-size:14px;font-weight:bold}.fri,.sat{color:red}.manage{width:70px}.sel{width:100%;height:23px;border:0;border-radius:12px;font-size:11px;padding:0 5px}.Morning{background:#e8ebed}.Evening{background:#ffd0b1}.Night{background:#ffcaca}.OFF{background:#f10d17;color:white}.del{padding:4px 7px!important;background:white!important;color:red;border:1px solid red!important;font-size:10px}.modal{position:fixed;inset:0;background:#0007;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}.modalbox{width:430px;max-width:100%;background:white;padding:20px;border-radius:8px}.modalbox input{width:100%;padding:9px;margin:4px 0 10px;border:1px solid #aaa;border-radius:5px}.userrow{display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #ddd;font-size:13px}.userlist{border:1px solid #ddd;max-height:220px;overflow:auto;margin-bottom:12px}.userrow button{color:red;background:white;border:1px solid red;border-radius:4px}.modal-actions{display:flex;gap:6px}.modal-actions button{padding:8px 12px}.status{font-size:12px;color:#555;margin:4px 0 8px}@media print{.top,.status,.manage{display:none!important}.table-wrap{border:0}}
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7f8;
+}
+
+.hidden{display:none!important}
+
+.login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.box{
+  width:360px;
+  background:white;
+  padding:28px;
+  border:1px solid #aaa;
+  border-radius:10px;
+  box-shadow:0 8px 25px #0002;
+}
+
+.box h2{text-align:center}
+
+.box label{
+  display:block;
+  font-weight:bold;
+  font-size:13px;
+  margin:12px 0 5px;
+}
+
+.box input{
+  width:100%;
+  padding:10px;
+  border:1px solid #aaa;
+  border-radius:5px;
+}
+
+.box button{
+  width:100%;
+  margin-top:16px;
+  padding:10px;
+  background:#08dede;
+  border:1px solid #078f8f;
+  border-radius:5px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.err{
+  color:#d00;
+  text-align:center;
+  font-size:12px;
+  min-height:18px;
+  margin-top:5px;
+}
+
+.app{
+  padding:10px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+
+.top h1{
+  font-size:22px;
+  margin:0;
+}
+
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.actions button,
+.actions input{
+  padding:8px;
+  border:1px solid #999;
+  border-radius:5px;
+}
+
+.actions button{
+  background:#08dede;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.actions .logout{
+  background:white;
+  color:red;
+  border-color:red;
+}
+
+.table-wrap{
+  overflow:auto;
+  background:white;
+  border:1px solid #777;
+}
+
+table{
+  width:100%;
+  min-width:950px;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+
+th,td{
+  border:1px solid #888;
+  height:31px;
+  text-align:center;
+  padding:2px;
+}
+
+th{font-size:12px}
+
+.name,
+th.name{
+  width:125px;
+  background:#08dede;
+  text-align:left;
+  padding-left:5px;
+}
+
+.employee{
+  background:#08dede;
+  text-align:left;
+  padding-left:5px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.fri,.sat{
+  color:red;
+}
+
+.manage{
+  width:70px;
+}
+
+.sel{
+  width:100%;
+  height:23px;
+  border:0;
+  border-radius:12px;
+  font-size:11px;
+  padding:0 5px;
+  cursor:pointer;
+}
+
+.sel:disabled{
+  cursor:default;
+}
+
+.Morning{background:#e8ebed}
+.Evening{background:#ffd0b1}
+.Night{background:#ffcaca}
+
+.OFF{
+  background:#f10d17;
+  color:white;
+}
+
+.del{
+  padding:4px 7px!important;
+  background:white!important;
+  color:red;
+  border:1px solid red!important;
+  font-size:10px;
+  cursor:pointer;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0007;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  overflow:auto;
+  z-index:1000;
+}
+
+.modalbox{
+  width:430px;
+  max-width:100%;
+  background:white;
+  padding:20px;
+  border-radius:8px;
+  max-height:95vh;
+  overflow:auto;
+}
+
+.modalbox input{
+  width:100%;
+  padding:9px;
+  margin:4px 0 10px;
+  border:1px solid #aaa;
+  border-radius:5px;
+}
+
+.userrow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:8px;
+  border-bottom:1px solid #ddd;
+  font-size:13px;
+}
+
+.userlist{
+  border:1px solid #ddd;
+  max-height:220px;
+  overflow:auto;
+  margin-bottom:12px;
+}
+
+.userrow button{
+  color:red;
+  background:white;
+  border:1px solid red;
+  border-radius:4px;
+  padding:4px 8px;
+  cursor:pointer;
+}
+
+.modal-actions{
+  display:flex;
+  gap:6px;
+}
+
+.modal-actions button{
+  padding:8px 12px;
+  cursor:pointer;
+}
+
+.status{
+  font-size:12px;
+  color:#555;
+  margin:4px 0 8px;
+}
+
+.live-dot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#16a34a;
+  margin-right:5px;
+}
+
+.live-dot.offline{
+  background:#dc2626;
+}
+
+.loading{
+  text-align:center;
+  padding:20px;
+  color:#666;
+}
+
+@media(max-width:600px){
+
+  .box{
+    width:calc(100% - 30px);
+  }
+
+  .top h1{
+    font-size:20px;
+  }
+
+}
+
+@media print{
+
+  .top,
+  .status,
+  .manage{
+    display:none!important;
+  }
+
+  .table-wrap{
+    border:0;
+  }
+}
 </style>
 </head>
+
 <body>
-<div id="login" class="login"><div class="box">
-<h2>Shift Roster Login</h2>
-<form onsubmit="login(event)">
-<label>Username</label><input id="u" autocomplete="username" required>
-<label>Password</label><input id="p" type="password" autocomplete="current-password" required>
-<button>Login</button><div id="err" class="err"></div>
-</form>
-<small>Admin can edit and create Viewer accounts. Viewer can only view.</small>
-</div></div>
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<div id="login" class="login">
+
+  <div class="box">
+
+    <h2>Shift Roster Login</h2>
+
+    <form id="loginForm">
+
+      <label>Username</label>
+
+      <input
+        id="u"
+        autocomplete="username"
+        required
+      >
+
+      <label>Password</label>
+
+      <input
+        id="p"
+        type="password"
+        autocomplete="current-password"
+        required
+      >
+
+      <button id="loginBtn" type="submit">
+        Login
+      </button>
+
+      <div id="err" class="err"></div>
+
+    </form>
+
+    <small>
+      Admin can edit the roster and manage users.
+      Viewer can only view.
+    </small>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
 
 <div id="app" class="app hidden">
-<div class="top">
-<div><h1>Shift Roster</h1><div>Logged in: <b id="who"></b> (<span id="role"></span>)</div></div>
-<div class="actions">
-<input id="search" placeholder="Search employee..." oninput="render()">
-<button id="add" onclick="addEmployee()">+ Employee</button>
-<button id="users" onclick="openUsers()">Manage Users</button>
-<button onclick="window.print()">Print</button>
-<button id="reset" onclick="resetRoster()">Reset</button>
-<button class="logout" onclick="logout()">Logout</button>
-</div>
-</div>
-<div id="status" class="status">Connecting...</div>
-<div class="table-wrap"><table><thead><tr>
-<th class="name">Day</th><th>Sunday</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th class="fri">Friday</th><th class="sat">Saturday</th><th class="manage">Manage</th>
-</tr></thead><tbody id="tbody"></tbody></table></div>
+
+  <div class="top">
+
+    <div>
+
+      <h1>Shift Roster</h1>
+
+      <div>
+        Logged in:
+        <b id="who"></b>
+        (<span id="role"></span>)
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <input
+        id="search"
+        placeholder="Search employee..."
+      >
+
+      <button
+        id="add"
+        type="button"
+      >
+        + Employee
+      </button>
+
+      <button
+        id="users"
+        type="button"
+      >
+        Manage Users
+      </button>
+
+      <button
+        id="printBtn"
+        type="button"
+      >
+        Print
+      </button>
+
+      <button
+        id="reset"
+        type="button"
+      >
+        Reset
+      </button>
+
+      <button
+        id="logoutBtn"
+        class="logout"
+        type="button"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+
+  <div id="status" class="status">
+    <span class="live-dot"></span>
+    Connecting...
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th class="name">
+            Employee
+          </th>
+
+          <th>Sunday</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+
+          <th class="fri">
+            Friday
+          </th>
+
+          <th class="sat">
+            Saturday
+          </th>
+
+          <th class="manage">
+            Manage
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="tbody">
+
+        <tr>
+          <td colspan="9" class="loading">
+            Loading...
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
 </div>
 
-<div id="modal" class="modal hidden"><div class="modalbox">
-<h3>Manage Users</h3><div id="userlist" class="userlist"></div>
-<label>New username</label><input id="nu" autocomplete="off">
-<label>New password</label><input id="np" type="password" autocomplete="new-password">
-<label>Access type</label>
-<select id="newRole" style="width:100%;padding:9px;margin:4px 0 10px;border:1px solid #aaa;border-radius:5px">
-<option value="viewer">Viewer - View only</option><option value="admin">Administrator - Full access</option>
-</select>
-<div id="uerr" class="err"></div>
-<div class="modal-actions"><button onclick="createUser()">Create User</button><button onclick="closeUsers()">Close</button></div>
-<hr style="border:0;border-top:1px solid #ddd;margin:18px 0">
-<h3 style="font-size:17px">Change My Password</h3>
-<label>Current password</label><input id="cp" type="password" autocomplete="current-password">
-<label>New password</label><input id="ap" type="password" autocomplete="new-password">
-<label>Confirm new password</label><input id="ap2" type="password" autocomplete="new-password">
-<div id="perr" class="err"></div><div class="modal-actions"><button onclick="changeMyPassword()">Change Password</button></div>
-</div></div>
+
+<!-- =====================================================
+     USER MANAGEMENT MODAL
+===================================================== -->
+
+<div id="modal" class="modal hidden">
+
+  <div class="modalbox">
+
+    <h3>Manage Users</h3>
+
+    <div id="userlist" class="userlist">
+      <div class="loading">
+        Loading users...
+      </div>
+    </div>
+
+    <label>New username</label>
+
+    <input
+      id="nu"
+      autocomplete="off"
+    >
+
+    <label>New password</label>
+
+    <input
+      id="np"
+      type="password"
+      autocomplete="new-password"
+    >
+
+    <label>Access type</label>
+
+    <select
+      id="newRole"
+      style="width:100%;padding:9px;margin:4px 0 10px;border:1px solid #aaa;border-radius:5px"
+    >
+
+      <option value="viewer">
+        Viewer - View only
+      </option>
+
+      <option value="admin">
+        Administrator - Full access
+      </option>
+
+    </select>
+
+    <div id="uerr" class="err"></div>
+
+    <div class="modal-actions">
+
+      <button
+        id="createUserBtn"
+        type="button"
+      >
+        Create User
+      </button>
+
+      <button
+        id="closeUsersBtn"
+        type="button"
+      >
+        Close
+      </button>
+
+    </div>
+
+    <hr style="border:0;border-top:1px solid #ddd;margin:18px 0">
+
+    <h3 style="font-size:17px">
+      Change My Password
+    </h3>
+
+    <label>Current password</label>
+
+    <input
+      id="cp"
+      type="password"
+      autocomplete="current-password"
+    >
+
+    <label>New password</label>
+
+    <input
+      id="ap"
+      type="password"
+      autocomplete="new-password"
+    >
+
+    <label>Confirm new password</label>
+
+    <input
+      id="ap2"
+      type="password"
+      autocomplete="new-password"
+    >
+
+    <div id="perr" class="err"></div>
+
+    <div class="modal-actions">
+
+      <button
+        id="changePasswordBtn"
+        type="button"
+      >
+        Change Password
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     SUPABASE JS
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
+
+/* =========================================================
+   SUPABASE CONFIG
+========================================================= */
+
 const CONFIG = {
-  SUPABASE_URL: 'https://yzmxsulamzoxxfzzztgt.supabase.co',
-  SUPABASE_ANON_KEY: 'sb_publishable_uwrr5J2EdLC6i8GYIQqLww_NN5kaTSg'
+
+  SUPABASE_URL:
+    'https://yzmxsulamzoxxfzzztgt.supabase.co',
+
+  SUPABASE_ANON_KEY:
+    'sb_publishable_uwrr5J2EdLC6i8GYIQqLww_NN5kaTSg'
+
 };
-const SH=['Morning','Evening','Night','OFF'];
-const D=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const DEFAULT=[
-['Regyan',['Morning','Morning','Morning','Morning','Morning','Morning','Morning']],
-['Tapas',['OFF','Morning','Morning','Morning','Morning','Morning','OFF']],
-['Nitu',['OFF','Evening','Evening','Evening','Evening','Morning','OFF']],
-['Ashraful',['Morning','Morning','Evening','Morning','OFF','OFF','Evening']],
-['Mazharul',['Morning','Morning','Morning','Morning','Morning','OFF','OFF']],
-['Rabby',['Evening','Evening','Evening','Evening','Evening','OFF','OFF']],
-['Shohidul',['OFF','Evening','Morning','Evening','Morning','Evening','OFF']],
-['Ayan',['Morning','Evening','Evening','Evening','OFF','OFF','Evening']],
-['Arman',['Evening','Evening','Evening','Evening','OFF','OFF','Morning']],
-['Jaber',['Evening','Evening','Evening','Evening','Morning','Morning','OFF']],
-['Joynto',['Night','OFF','Morning','Morning','Evening','Morning','OFF']],
-['Joy',['Evening','Morning','Morning','Night','OFF','Evening','Morning']],
-['Rakib',['Morning','Morning','Morning','Night','Night','OFF','Morning']],
-['Partho',['Morning','Morning','Night','OFF','Evening','Evening','Evening']],
-['Nur',['Evening','Morning','Evening','Morning','Evening','Night','OFF']],
-['Shaown',['Morning','Night','OFF','Morning','Morning','Evening','Morning']],
-['Primon',['OFF','Evening','Evening','Evening','Morning','Morning','Night']]
+
+
+/* =========================================================
+   SUPABASE CLIENT
+========================================================= */
+
+const sb =
+  window.supabase.createClient(
+    CONFIG.SUPABASE_URL,
+    CONFIG.SUPABASE_ANON_KEY
+  );
+
+
+/* =========================================================
+   CONSTANTS
+========================================================= */
+
+const SH = [
+  'Morning',
+  'Evening',
+  'Night',
+  'OFF'
 ];
 
-let employees=[];
-let session=JSON.parse(localStorage.getItem('sr_session')||'null');
-let pollTimer=null;
+const D = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+];
 
-const loginDiv=document.getElementById('login'),app=document.getElementById('app'),u=document.getElementById('u'),p=document.getElementById('p'),
-err=document.getElementById('err'),who=document.getElementById('who'),role=document.getElementById('role'),add=document.getElementById('add'),
-usersBtn=document.getElementById('users'),reset=document.getElementById('reset'),tbody=document.getElementById('tbody'),search=document.getElementById('search'),
-status=document.getElementById('status'),modal=document.getElementById('modal'),userlist=document.getElementById('userlist'),nu=document.getElementById('nu'),
-np=document.getElementById('np'),newRole=document.getElementById('newRole'),uerr=document.getElementById('uerr'),cp=document.getElementById('cp'),
-ap=document.getElementById('ap'),ap2=document.getElementById('ap2');
 
-function readyConfig(){
-  return CONFIG.SUPABASE_URL.startsWith('https://') &&
-         !CONFIG.SUPABASE_URL.includes('PASTE_YOUR') &&
-         !CONFIG.SUPABASE_ANON_KEY.includes('PASTE_YOUR');
+/* =========================================================
+   STATE
+========================================================= */
+
+let employees = [];
+
+let session =
+  JSON.parse(
+    localStorage.getItem('sr_session') || 'null'
+  );
+
+let realtimeChannel = null;
+
+let realtimeRetryTimer = null;
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const loginDiv =
+  document.getElementById('login');
+
+const app =
+  document.getElementById('app');
+
+const loginForm =
+  document.getElementById('loginForm');
+
+const loginBtn =
+  document.getElementById('loginBtn');
+
+const u =
+  document.getElementById('u');
+
+const p =
+  document.getElementById('p');
+
+const err =
+  document.getElementById('err');
+
+const who =
+  document.getElementById('who');
+
+const role =
+  document.getElementById('role');
+
+const add =
+  document.getElementById('add');
+
+const usersBtn =
+  document.getElementById('users');
+
+const reset =
+  document.getElementById('reset');
+
+const logoutBtn =
+  document.getElementById('logoutBtn');
+
+const printBtn =
+  document.getElementById('printBtn');
+
+const tbody =
+  document.getElementById('tbody');
+
+const search =
+  document.getElementById('search');
+
+const status =
+  document.getElementById('status');
+
+const modal =
+  document.getElementById('modal');
+
+const userlist =
+  document.getElementById('userlist');
+
+const nu =
+  document.getElementById('nu');
+
+const np =
+  document.getElementById('np');
+
+const newRole =
+  document.getElementById('newRole');
+
+const uerr =
+  document.getElementById('uerr');
+
+const cp =
+  document.getElementById('cp');
+
+const ap =
+  document.getElementById('ap');
+
+const ap2 =
+  document.getElementById('ap2');
+
+const perr =
+  document.getElementById('perr');
+
+const createUserBtn =
+  document.getElementById('createUserBtn');
+
+const closeUsersBtn =
+  document.getElementById('closeUsersBtn');
+
+const changePasswordBtn =
+  document.getElementById('changePasswordBtn');
+
+
+/* =========================================================
+   RPC
+========================================================= */
+
+async function rpc(name, body = {}){
+
+  const { data, error } =
+    await sb.rpc(name, body);
+
+  if(error){
+
+    throw new Error(
+      error.message ||
+      'Supabase request failed'
+    );
+
+  }
+
+  return data;
+
 }
-function headers(){return {'apikey':CONFIG.SUPABASE_ANON_KEY,'Authorization':'Bearer '+CONFIG.SUPABASE_ANON_KEY,'Content-Type':'application/json'};}
-async function rpc(name, body={}){
-  if(!readyConfig()) throw new Error('Please put your Supabase URL and anon key in index.html first.');
-  const r=await fetch(CONFIG.SUPABASE_URL+'/rest/v1/rpc/'+name,{method:'POST',headers:headers(),body:JSON.stringify(body)});
-  const text=await r.text();
-  if(!r.ok) throw new Error(text||('HTTP '+r.status));
-  try{return JSON.parse(text)}catch{return text}
+
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+function niceError(ex){
+
+  if(!ex){
+    return 'Request failed';
+  }
+
+  if(typeof ex === 'string'){
+    return ex;
+  }
+
+  return (
+    ex.message ||
+    ex.error_description ||
+    'Request failed'
+  );
+
 }
-async function table(path, query=''){
-  const r=await fetch(CONFIG.SUPABASE_URL+'/rest/v1/'+path+query,{headers:headers()});
-  const text=await r.text();
-  if(!r.ok) throw new Error(text||('HTTP '+r.status));
-  return JSON.parse(text);
+
+
+/* =========================================================
+   SESSION VALIDATION
+========================================================= */
+
+async function validateSession(){
+
+  if(!session?.token){
+
+    return false;
+
+  }
+
+  try{
+
+    const rows =
+      await rpc(
+        'get_current_user',
+        {
+          p_token:session.token
+        }
+      );
+
+    if(
+      !rows ||
+      !rows.length
+    ){
+
+      clearSession();
+
+      return false;
+
+    }
+
+    /*
+      Refresh role/username from database.
+      This prevents an old localStorage role
+      from causing permission problems.
+    */
+
+    session.username =
+      rows[0].username;
+
+    session.role =
+      rows[0].role;
+
+    session.user_id =
+      rows[0].user_id;
+
+    localStorage.setItem(
+      'sr_session',
+      JSON.stringify(session)
+    );
+
+    return true;
+
+  }catch(ex){
+
+    console.error(
+      'Session validation failed:',
+      ex
+    );
+
+    return false;
+
+  }
+
 }
+
+
+/* =========================================================
+   CLEAR SESSION
+========================================================= */
+
+function clearSession(){
+
+  localStorage.removeItem(
+    'sr_session'
+  );
+
+  session = null;
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
 
 async function login(e){
-  e.preventDefault(); err.textContent='';
+
+  e.preventDefault();
+
+  err.textContent = '';
+
+  loginBtn.disabled = true;
+  loginBtn.textContent = 'Logging in...';
+
   try{
-    const rows=await rpc('login_user',{p_username:u.value.trim(),p_password:p.value});
-    if(!rows || !rows.length) throw new Error('Invalid username or password');
-    session=rows[0]; localStorage.setItem('sr_session',JSON.stringify(session)); show();
-  }catch(ex){err.textContent=niceError(ex);}
-}
-function niceError(ex){
-  try{let x=JSON.parse(ex.message); return x.message||x.error||ex.message}catch{return ex.message||'Request failed'}
-}
-async function show(){
-  if(!session) return;
-  loginDiv.classList.add('hidden'); app.classList.remove('hidden');
-  who.textContent=session.username; role.textContent=session.role==='admin'?'Admin':'Viewer';
-  const a=session.role==='admin'; add.classList.toggle('hidden',!a); usersBtn.classList.toggle('hidden',!a); reset.classList.toggle('hidden',!a);
-  await loadRoster();
-  clearInterval(pollTimer); pollTimer=setInterval(loadRoster,3000);
-}
-async function logout(){
-  try{if(session?.token) await rpc('logout_user',{p_token:session.token});}catch(e){}
-  clearInterval(pollTimer); localStorage.removeItem('sr_session'); session=null;
-  app.classList.add('hidden'); loginDiv.classList.remove('hidden'); u.value=''; p.value='';
-}
-async function loadRoster(){
-  try{
-    const emps=await table('employees','?select=id,name&order=id.asc');
-    const sh=await table('shifts','?select=employee_id,day_of_week,shift_name&order=employee_id.asc,day_of_week.asc');
-    const map={}; sh.forEach(x=>{(map[x.employee_id]??={})[x.day_of_week]=x.shift_name});
-    employees=emps.map(e=>({id:e.id,name:e.name,shifts:D.map((_,i)=>map[e.id]?.[i]||'OFF')}));
-    render(); status.textContent='Live • Updated '+new Date().toLocaleTimeString();
-  }catch(ex){status.textContent='Connection error: '+niceError(ex);}
-}
-function render(){
-  tbody.innerHTML=''; let q=search.value.toLowerCase().trim();
-  employees.forEach(e=>{
-    if(q&&!e.name.toLowerCase().includes(q))return;
-    const tr=document.createElement('tr'), n=document.createElement('td'); n.className='employee'; n.textContent=e.name; tr.appendChild(n);
-    e.shifts.forEach((s,d)=>{
-      const td=document.createElement('td'), sel=document.createElement('select'); sel.className='sel '+s;
-      SH.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;o.selected=v===s;sel.appendChild(o)});
-      if(session.role==='admin') sel.onchange=async()=>{try{
-        await rpc('set_shift',{p_token:session.token,p_employee_id:e.id,p_day_of_week:d,p_shift_name:sel.value});
-        status.textContent='Saved: '+e.name+' / '+D[d]+' / '+sel.value;
-      }catch(ex){alert(niceError(ex));await loadRoster();}};
-      else sel.disabled=true;
-      td.appendChild(sel);tr.appendChild(td);
-    });
-    const m=document.createElement('td');m.className='manage';
-    if(session.role==='admin'){const b=document.createElement('button');b.className='del';b.textContent='Delete';b.onclick=()=>deleteEmployee(e);m.appendChild(b)}
-    tr.appendChild(m);tbody.appendChild(tr);
-  });
-}
-async function addEmployee(){
-  const n=prompt('Employee name:'); if(!n||!n.trim())return;
-  try{await rpc('add_employee',{p_token:session.token,p_name:n.trim()});await loadRoster();}
-  catch(ex){alert(niceError(ex))}
-}
-async function deleteEmployee(e){
-  if(!confirm('Delete '+e.name+'?'))return;
-  try{await rpc('delete_employee',{p_token:session.token,p_employee_id:e.id});await loadRoster();}
-  catch(ex){alert(niceError(ex))}
-}
-async function resetRoster(){
-  if(!confirm('Reset to the original sample data?'))return;
-  try{await rpc('reset_roster',{p_token:session.token});await loadRoster();}
-  catch(ex){alert(niceError(ex))}
-}
-async function openUsers(){
-  try{await renderUsers();modal.classList.remove('hidden')}catch(ex){alert(niceError(ex))}
-}
-function closeUsers(){modal.classList.add('hidden')}
-async function renderUsers(){
-  const rows=await rpc('list_users',{p_token:session.token}); userlist.innerHTML='';
-  rows.forEach(x=>{
-    const r=document.createElement('div');r.className='userrow';
-    const span=document.createElement('span');span.textContent=x.username+' ('+(x.role==='admin'?'Administrator':'Viewer')+')';r.appendChild(span);
-    if(x.username!==session.username){
-      const b=document.createElement('button');b.textContent='Delete';b.onclick=async()=>{if(confirm('Delete '+x.username+'?')){try{await rpc('delete_user',{p_token:session.token,p_username:x.username});await renderUsers()}catch(ex){alert(niceError(ex))}}};r.appendChild(b);
+
+    const rows =
+      await rpc(
+        'login_user',
+        {
+          p_username:
+            u.value.trim(),
+
+          p_password:
+            p.value
+        }
+      );
+
+    if(
+      !rows ||
+      !rows.length
+    ){
+
+      throw new Error(
+        'Invalid username or password'
+      );
+
     }
-    userlist.appendChild(r);
+
+    session = {
+
+      token:
+        rows[0].token,
+
+      user_id:
+        rows[0].user_id,
+
+      username:
+        rows[0].username,
+
+      role:
+        rows[0].role
+
+    };
+
+    localStorage.setItem(
+      'sr_session',
+      JSON.stringify(session)
+    );
+
+    p.value = '';
+
+    await show();
+
+  }catch(ex){
+
+    console.error(ex);
+
+    err.textContent =
+      niceError(ex);
+
+  }finally{
+
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Login';
+
+  }
+
+}
+
+
+/* =========================================================
+   SHOW APP
+========================================================= */
+
+async function show(){
+
+  if(!session?.token){
+
+    clearSession();
+
+    return;
+
+  }
+
+  const valid =
+    await validateSession();
+
+  if(!valid){
+
+    return;
+
+  }
+
+  loginDiv.classList.add('hidden');
+
+  app.classList.remove('hidden');
+
+  who.textContent =
+    session.username;
+
+  role.textContent =
+    session.role === 'admin'
+      ? 'Admin'
+      : 'Viewer';
+
+  const isAdmin =
+    session.role === 'admin';
+
+  add.classList.toggle(
+    'hidden',
+    !isAdmin
+  );
+
+  usersBtn.classList.toggle(
+    'hidden',
+    !isAdmin
+  );
+
+  reset.classList.toggle(
+    'hidden',
+    !isAdmin
+  );
+
+  await loadRoster();
+
+  setupRealtime();
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(){
+
+  try{
+
+    if(session?.token){
+
+      await rpc(
+        'logout_user',
+        {
+          p_token:
+            session.token
+        }
+      );
+
+    }
+
+  }catch(ex){
+
+    console.warn(
+      'Logout RPC failed:',
+      ex
+    );
+
+  }
+
+  stopRealtime();
+
+  clearSession();
+
+  employees = [];
+
+  tbody.innerHTML = '';
+
+  app.classList.add('hidden');
+
+  loginDiv.classList.remove('hidden');
+
+  u.value = '';
+  p.value = '';
+
+  err.textContent = '';
+
+}
+
+
+/* =========================================================
+   LOAD ROSTER
+========================================================= */
+
+async function loadRoster(){
+
+  if(!session?.token){
+    return;
+  }
+
+  try{
+
+    status.innerHTML =
+      '<span class="live-dot"></span>' +
+      'Loading roster...';
+
+    /*
+      Use get_roster RPC instead of direct table reads.
+    */
+
+    const rows =
+      await rpc(
+        'get_roster',
+        {
+          p_token:
+            session.token
+        }
+      );
+
+    if(!rows){
+
+      employees = [];
+
+      render();
+
+      return;
+
+    }
+
+    const map = {};
+
+    rows.forEach(x => {
+
+      if(!map[x.employee_id]){
+
+        map[x.employee_id] = {
+
+          id:
+            x.employee_id,
+
+          name:
+            x.employee_name,
+
+          shifts:
+            Array(7).fill('OFF')
+
+        };
+
+      }
+
+      map[x.employee_id]
+        .shifts[x.day_of_week] =
+          x.shift_name || 'OFF';
+
+    });
+
+    employees =
+      Object.values(map);
+
+    render();
+
+    status.innerHTML =
+      '<span class="live-dot"></span>' +
+      'Live • Updated ' +
+      new Date().toLocaleTimeString();
+
+  }catch(ex){
+
+    console.error(
+      'Roster load error:',
+      ex
+    );
+
+    const message =
+      niceError(ex);
+
+    /*
+      Invalid/expired token.
+    */
+
+    if(
+      message.toLowerCase()
+        .includes('invalid or expired')
+    ){
+
+      alert(
+        'Your session has expired. Please login again.'
+      );
+
+      await logout();
+
+      return;
+
+    }
+
+    status.innerHTML =
+      '<span class="live-dot offline"></span>' +
+      'Connection error: ' +
+      message;
+
+  }
+
+}
+
+
+/* =========================================================
+   REALTIME
+========================================================= */
+
+function stopRealtime(){
+
+  if(realtimeRetryTimer){
+
+    clearTimeout(
+      realtimeRetryTimer
+    );
+
+    realtimeRetryTimer = null;
+
+  }
+
+  if(realtimeChannel){
+
+    sb.removeChannel(
+      realtimeChannel
+    );
+
+    realtimeChannel = null;
+
+  }
+
+}
+
+
+function setupRealtime(){
+
+  stopRealtime();
+
+  if(!session){
+
+    return;
+
+  }
+
+  realtimeChannel =
+    sb
+      .channel('shift-roster-live')
+
+      .on(
+        'postgres_changes',
+        {
+          event:'*',
+          schema:'public',
+          table:'employees'
+        },
+        payload => {
+
+          console.log(
+            'Employee realtime change:',
+            payload
+          );
+
+          loadRoster();
+
+        }
+      )
+
+      .on(
+        'postgres_changes',
+        {
+          event:'*',
+          schema:'public',
+          table:'shifts'
+        },
+        payload => {
+
+          console.log(
+            'Shift realtime change:',
+            payload
+          );
+
+          loadRoster();
+
+        }
+      )
+
+      .subscribe(
+        state => {
+
+          console.log(
+            'Realtime:',
+            state
+          );
+
+          if(
+            state === 'SUBSCRIBED'
+          ){
+
+            status.innerHTML =
+              '<span class="live-dot"></span>' +
+              'Live • Realtime connected';
+
+          }
+
+          if(
+            state === 'CHANNEL_ERROR' ||
+            state === 'TIMED_OUT' ||
+            state === 'CLOSED'
+          ){
+
+            status.innerHTML =
+              '<span class="live-dot offline"></span>' +
+              'Realtime disconnected';
+
+            if(session){
+
+              if(realtimeRetryTimer){
+
+                clearTimeout(
+                  realtimeRetryTimer
+                );
+
+              }
+
+              realtimeRetryTimer =
+                setTimeout(
+                  () => {
+
+                    if(session){
+
+                      setupRealtime();
+
+                    }
+
+                  },
+                  5000
+                );
+
+            }
+
+          }
+
+        }
+      );
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+  tbody.innerHTML = '';
+
+  const q =
+    search.value
+      .toLowerCase()
+      .trim();
+
+  const isAdmin =
+    session &&
+    session.role === 'admin';
+
+  const filtered =
+    employees.filter(e => {
+
+      return !q ||
+        e.name
+          .toLowerCase()
+          .includes(q);
+
+    });
+
+  if(!filtered.length){
+
+    const tr =
+      document.createElement('tr');
+
+    const td =
+      document.createElement('td');
+
+    td.colSpan = 9;
+
+    td.className = 'loading';
+
+    td.textContent =
+      q
+        ? 'No employee found'
+        : 'No employees';
+
+    tr.appendChild(td);
+
+    tbody.appendChild(tr);
+
+    return;
+
+  }
+
+
+  filtered.forEach(e => {
+
+    const tr =
+      document.createElement('tr');
+
+
+    /* Employee name */
+
+    const n =
+      document.createElement('td');
+
+    n.className =
+      'employee';
+
+    n.textContent =
+      e.name;
+
+    tr.appendChild(n);
+
+
+    /* Seven days */
+
+    e.shifts.forEach(
+      (s,d) => {
+
+        const td =
+          document.createElement('td');
+
+        const sel =
+          document.createElement('select');
+
+        sel.className =
+          'sel ' + s;
+
+        SH.forEach(v => {
+
+          const o =
+            document.createElement('option');
+
+          o.value = v;
+
+          o.textContent = v;
+
+          o.selected =
+            v === s;
+
+          sel.appendChild(o);
+
+        });
+
+
+        if(isAdmin){
+
+          sel.disabled = false;
+
+          sel.onchange =
+            async () => {
+
+              const oldValue =
+                s;
+
+              const newValue =
+                sel.value;
+
+              try{
+
+                sel.disabled = true;
+
+                await rpc(
+                  'set_shift',
+                  {
+                    p_token:
+                      session.token,
+
+                    p_employee_id:
+                      e.id,
+
+                    p_day_of_week:
+                      d,
+
+                    p_shift_name:
+                      newValue
+                  }
+                );
+
+                /*
+                  Update local value immediately.
+                */
+
+                e.shifts[d] =
+                  newValue;
+
+                sel.className =
+                  'sel ' + newValue;
+
+                status.innerHTML =
+                  '<span class="live-dot"></span>' +
+                  'Saved • ' +
+                  e.name +
+                  ' / ' +
+                  D[d] +
+                  ' / ' +
+                  newValue;
+
+              }catch(ex){
+
+                console.error(ex);
+
+                alert(
+                  niceError(ex)
+                );
+
+                e.shifts[d] =
+                  oldValue;
+
+                await loadRoster();
+
+              }finally{
+
+                sel.disabled = false;
+
+              }
+
+            };
+
+        }else{
+
+          sel.disabled = true;
+
+        }
+
+
+        td.appendChild(sel);
+
+        tr.appendChild(td);
+
+      }
+    );
+
+
+    /* Manage/Delete */
+
+    const m =
+      document.createElement('td');
+
+    m.className =
+      'manage';
+
+    if(isAdmin){
+
+      const b =
+        document.createElement('button');
+
+      b.className =
+        'del';
+
+      b.type =
+        'button';
+
+      b.textContent =
+        'Delete';
+
+      b.onclick =
+        () => deleteEmployee(e);
+
+      m.appendChild(b);
+
+    }
+
+    tr.appendChild(m);
+
+    tbody.appendChild(tr);
+
   });
+
 }
+
+
+/* =========================================================
+   ADD EMPLOYEE
+========================================================= */
+
+async function addEmployee(){
+
+  if(
+    !session ||
+    session.role !== 'admin'
+  ){
+
+    alert(
+      'Admin access required'
+    );
+
+    return;
+
+  }
+
+  const n =
+    prompt(
+      'Employee name:'
+    );
+
+  if(
+    !n ||
+    !n.trim()
+  ){
+
+    return;
+
+  }
+
+  try{
+
+    await rpc(
+      'add_employee',
+      {
+        p_token:
+          session.token,
+
+        p_name:
+          n.trim()
+      }
+    );
+
+    await loadRoster();
+
+  }catch(ex){
+
+    alert(
+      niceError(ex)
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   DELETE EMPLOYEE
+========================================================= */
+
+async function deleteEmployee(e){
+
+  if(
+    !confirm(
+      'Delete ' +
+      e.name +
+      '?'
+    )
+  ){
+
+    return;
+
+  }
+
+  try{
+
+    await rpc(
+      'delete_employee',
+      {
+        p_token:
+          session.token,
+
+        p_employee_id:
+          e.id
+      }
+    );
+
+    await loadRoster();
+
+  }catch(ex){
+
+    alert(
+      niceError(ex)
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   RESET ROSTER
+========================================================= */
+
+async function resetRoster(){
+
+  if(
+    !confirm(
+      'Reset roster to original sample data?'
+    )
+  ){
+
+    return;
+
+  }
+
+  try{
+
+    await rpc(
+      'reset_roster',
+      {
+        p_token:
+          session.token
+      }
+    );
+
+    await loadRoster();
+
+    alert(
+      'Roster reset successfully.'
+    );
+
+  }catch(ex){
+
+    alert(
+      niceError(ex)
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   OPEN USERS
+========================================================= */
+
+async function openUsers(){
+
+  /*
+    Always verify the role from database first.
+    This prevents stale localStorage data.
+  */
+
+  try{
+
+    const valid =
+      await validateSession();
+
+    if(!valid){
+
+      alert(
+        'Your session has expired. Please login again.'
+      );
+
+      return;
+
+    }
+
+    if(
+      session.role !== 'admin'
+    ){
+
+      alert(
+        'Admin access required'
+      );
+
+      return;
+
+    }
+
+    uerr.textContent = '';
+
+    perr.textContent = '';
+
+    await renderUsers();
+
+    modal.classList.remove(
+      'hidden'
+    );
+
+  }catch(ex){
+
+    console.error(ex);
+
+    alert(
+      niceError(ex)
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   CLOSE USERS
+========================================================= */
+
+function closeUsers(){
+
+  modal.classList.add(
+    'hidden'
+  );
+
+}
+
+
+/* =========================================================
+   RENDER USERS
+========================================================= */
+
+async function renderUsers(){
+
+  userlist.innerHTML =
+    '<div class="loading">Loading users...</div>';
+
+  const rows =
+    await rpc(
+      'list_users',
+      {
+        p_token:
+          session.token
+      }
+    );
+
+  userlist.innerHTML = '';
+
+
+  if(
+    !rows ||
+    !rows.length
+  ){
+
+    userlist.innerHTML =
+      '<div class="loading">No users found</div>';
+
+    return;
+
+  }
+
+
+  rows.forEach(x => {
+
+    const r =
+      document.createElement('div');
+
+    r.className =
+      'userrow';
+
+
+    const span =
+      document.createElement('span');
+
+    span.textContent =
+      x.username +
+      ' (' +
+      (
+        x.role === 'admin'
+          ? 'Administrator'
+          : 'Viewer'
+      ) +
+      ')';
+
+    r.appendChild(span);
+
+
+    /*
+      Do not show delete button for yourself.
+    */
+
+    if(
+      x.username !==
+      session.username
+    ){
+
+      const b =
+        document.createElement('button');
+
+      b.type =
+        'button';
+
+      b.textContent =
+        'Delete';
+
+
+      b.onclick =
+        async () => {
+
+          if(
+            !confirm(
+              'Delete ' +
+              x.username +
+              '?'
+            )
+          ){
+
+            return;
+
+          }
+
+
+          try{
+
+            b.disabled = true;
+
+            await rpc(
+              'delete_user',
+              {
+                p_token:
+                  session.token,
+
+                /*
+                  IMPORTANT:
+                  SQL expects p_user_id,
+                  NOT p_username.
+                */
+
+                p_user_id:
+                  x.id
+              }
+            );
+
+            await renderUsers();
+
+          }catch(ex){
+
+            alert(
+              niceError(ex)
+            );
+
+            b.disabled = false;
+
+          }
+
+        };
+
+
+      r.appendChild(b);
+
+    }
+
+
+    userlist.appendChild(r);
+
+  });
+
+}
+
+
+/* =========================================================
+   CREATE USER
+========================================================= */
+
 async function createUser(){
-  const n=nu.value.trim(),pw=np.value,r=newRole.value;
-  uerr.textContent='';
-  if(!n||!pw){uerr.textContent='Username and password are required';return}
-  if(pw.length<4){uerr.textContent='Password must be at least 4 characters';return}
-  try{await rpc('create_user',{p_token:session.token,p_username:n,p_password:pw,p_role:r});nu.value='';np.value='';newRole.value='viewer';await renderUsers();alert('User created successfully');}
-  catch(ex){uerr.textContent=niceError(ex)}
+
+  const n =
+    nu.value.trim();
+
+  const pw =
+    np.value;
+
+  const r =
+    newRole.value;
+
+  uerr.textContent = '';
+
+
+  if(
+    !n ||
+    !pw
+  ){
+
+    uerr.textContent =
+      'Username and password are required';
+
+    return;
+
+  }
+
+
+  if(
+    pw.length < 4
+  ){
+
+    uerr.textContent =
+      'Password must be at least 4 characters';
+
+    return;
+
+  }
+
+
+  try{
+
+    createUserBtn.disabled = true;
+
+    await rpc(
+      'create_user',
+      {
+        p_token:
+          session.token,
+
+        p_username:
+          n,
+
+        p_password:
+          pw,
+
+        p_role:
+          r
+      }
+    );
+
+
+    nu.value = '';
+
+    np.value = '';
+
+    newRole.value =
+      'viewer';
+
+
+    await renderUsers();
+
+
+    uerr.textContent =
+      '';
+
+    alert(
+      'User created successfully'
+    );
+
+  }catch(ex){
+
+    console.error(ex);
+
+    uerr.textContent =
+      niceError(ex);
+
+  }finally{
+
+    createUserBtn.disabled = false;
+
+  }
+
 }
+
+
+/* =========================================================
+   CHANGE PASSWORD
+========================================================= */
+
 async function changeMyPassword(){
-  const current=cp.value,newp=ap.value,confirmP=ap2.value;perr.textContent='';
-  if(!current||!newp||!confirmP){perr.textContent='Please fill all password fields';return}
-  if(newp.length<4){perr.textContent='New password must be at least 4 characters';return}
-  if(newp!==confirmP){perr.textContent='New passwords do not match';return}
-  try{await rpc('change_my_password',{p_token:session.token,p_current_password:current,p_new_password:newp});
-    cp.value='';ap.value='';ap2.value='';alert('Password changed successfully');
-  }catch(ex){perr.textContent=niceError(ex)}
+
+  const current =
+    cp.value;
+
+  const newp =
+    ap.value;
+
+  const confirmP =
+    ap2.value;
+
+  perr.textContent = '';
+
+
+  if(
+    !current ||
+    !newp ||
+    !confirmP
+  ){
+
+    perr.textContent =
+      'Please fill all password fields';
+
+    return;
+
+  }
+
+
+  if(
+    newp.length < 4
+  ){
+
+    perr.textContent =
+      'New password must be at least 4 characters';
+
+    return;
+
+  }
+
+
+  if(
+    newp !== confirmP
+  ){
+
+    perr.textContent =
+      'New passwords do not match';
+
+    return;
+
+  }
+
+
+  try{
+
+    changePasswordBtn.disabled = true;
+
+    /*
+      IMPORTANT:
+      SQL expects p_old_password.
+    */
+
+    await rpc(
+      'change_my_password',
+      {
+        p_token:
+          session.token,
+
+        p_old_password:
+          current,
+
+        p_new_password:
+          newp
+      }
+    );
+
+
+    cp.value = '';
+
+    ap.value = '';
+
+    ap2.value = '';
+
+    perr.textContent =
+      '';
+
+    alert(
+      'Password changed successfully'
+    );
+
+  }catch(ex){
+
+    console.error(ex);
+
+    perr.textContent =
+      niceError(ex);
+
+  }finally{
+
+    changePasswordBtn.disabled = false;
+
+  }
+
 }
-if(session) show();
+
+
+/* =========================================================
+   EVENT LISTENERS
+========================================================= */
+
+loginForm.addEventListener(
+  'submit',
+  login
+);
+
+search.addEventListener(
+  'input',
+  render
+);
+
+add.addEventListener(
+  'click',
+  addEmployee
+);
+
+usersBtn.addEventListener(
+  'click',
+  openUsers
+);
+
+reset.addEventListener(
+  'click',
+  resetRoster
+);
+
+logoutBtn.addEventListener(
+  'click',
+  logout
+);
+
+printBtn.addEventListener(
+  'click',
+  () => window.print()
+);
+
+createUserBtn.addEventListener(
+  'click',
+  createUser
+);
+
+closeUsersBtn.addEventListener(
+  'click',
+  closeUsers
+);
+
+changePasswordBtn.addEventListener(
+  'click',
+  changeMyPassword
+);
+
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================================= */
+
+modal.addEventListener(
+  'click',
+  e => {
+
+    if(
+      e.target === modal
+    ){
+
+      closeUsers();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   START APPLICATION
+========================================================= */
+
+(async function(){
+
+  /*
+    If an old/broken session exists,
+    validate it against Supabase.
+
+    If invalid, remove it and show login.
+  */
+
+  if(session?.token){
+
+    const valid =
+      await validateSession();
+
+    if(valid){
+
+      await show();
+
+      return;
+
+    }
+
+    clearSession();
+
+  }
+
+  loginDiv.classList.remove(
+    'hidden'
+  );
+
+  app.classList.add(
+    'hidden'
+  );
+
+})();
+
 </script>
-</body></html>
+
+</body>
+</html>
+```
